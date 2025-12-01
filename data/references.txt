@@ -1,0 +1,204 @@
+# Data References for Hyderabad NbS Planner
+
+## Microsoft Global Building Footprints
+**Description**: High-precision building polygons with height estimates derived from satellite imagery and ML.
+
+**Access**: https://github.com/microsoft/GlobalMLBuildingFootprints
+
+**India Dataset**: https://github.com/microsoft/GlobalMLBuildingFootprints/releases
+- Format: GeoJSONL (newline-delimited GeoJSON)
+- Size: ~1.5 GB for India
+- License: ODbL (Open Database License)
+
+**Hyderabad Subset**:
+- Bounding Box: [78.3°E, 17.3°N] to [78.6°E, 17.5°N]
+- Approximate QuadKey: 123130323*
+
+**Download Instructions**:
+1. Visit the Microsoft Building Footprints GitHub repository
+2. Navigate to the "India" dataset in the releases section
+3. Download the GeoJSONL file
+4. Extract Hyderabad subset using geopandas:
+   ```python
+   import geopandas as gpd
+   gdf = gpd.read_file('India.geojsonl')
+   hyderabad = gdf.cx[78.3:78.6, 17.3:17.5]
+   hyderabad.to_file('data/references/hyderabad_buildings_ms.geojson')
+   ```
+
+**Usage in Project**:
+- Place the extracted file in `data/references/`
+- Set `USE_MS_BUILDINGS = True` in `src/config.py`
+- The data_loader module will automatically use it
+
+---
+
+## WorldPop Population Density
+**Description**: High-resolution (100m) population density rasters.
+
+**Access**: https://hub.worldpop.org/
+
+**India Dataset**: https://hub.worldpop.org/geodata/summary?id=49959
+- Resolution: 100m (approximately 3 arc-seconds)
+- Year: 2020 (or latest available)
+- Format: GeoTIFF
+- License: CC BY 4.0
+
+**Download Instructions**:
+1. Visit WorldPop Hub
+2. Search for "India Population 2020 Unconstrained 100m"
+3. Download the GeoTIFF file (~500 MB)
+4. Place in `data/references/worldpop_india_2020_100m.tif`
+
+**Usage**:
+- Can be overlaid with NbS analysis to prioritize interventions
+- Use rasterio to extract population for Hyderabad bounding box
+- Future enhancement: Weight interventions by population benefit
+
+---
+
+## OpenStreetMap (OSM)
+**Description**: Crowdsourced geospatial database.
+
+**Access**: https://www.openstreetmap.org/
+- Used via `osmnx` Python library
+- Real-time data fetching
+- License: ODbL
+
+**Data Retrieved**:
+1. Building footprints
+2. Road networks
+3. Land use (parks, forests, water bodies)
+4. Points of interest
+
+**Note**: OSM data quality varies by region. Hyderabad has good coverage but some gaps exist.
+
+---
+
+## Open-Meteo Historical Weather
+**Description**: Free historical weather data API.
+
+**Access**: https://open-meteo.com/
+- Historical Archive API: https://archive-api.open-meteo.com/v1/archive
+- License: CC BY 4.0
+- No API key required (fair use)
+
+**Data Retrieved**:
+- Wind direction (10m height)
+- Wind speed (10m height)
+- Temperature
+- Relative humidity
+
+**Parameters Used**:
+- Location: Hyderabad (17.3616°N, 78.4747°E)
+- Time Range: 2023-01-01 to 2023-12-31 (or current year)
+- Temporal Resolution: Hourly
+
+---
+
+## World Air Quality Index (WAQI)
+**Description**: Real-time air quality monitoring network.
+
+**Access**: https://waqi.info/
+- API: https://api.waqi.info/
+- Free tier: 1000 requests/day
+- Registration: https://aqicn.org/data-platform/token/
+
+**Data Retrieved**:
+- Air Quality Index (AQI)
+- PM2.5 concentration
+- PM10 concentration
+- Station metadata
+
+**Note**: API token optional for basic use. Register for higher rate limits.
+
+---
+
+## Telangana Open Data Portal
+**Description**: Government open data initiative.
+
+**Access**: https://data.telangana.gov.in/
+
+**Relevant Datasets**:
+1. **Land Use Land Cover (LULC)**
+   - Source: Telangana State Remote Sensing Applications Centre (TRAC)
+   
+2. **Urban Infrastructure**
+   - Water supply networks
+   - Drainage systems
+   - Green cover data
+
+3. **Climate Data**
+   - Temperature records
+   - Rainfall data
+   - Historical climate trends
+
+**Note**: Dataset availability and formats vary. Check portal for latest updates.
+
+---
+
+## Supplementary Data Sources
+
+### India Meteorological Department (IMD)
+- Rainfall and temperature normals
+- https://www.imd.gov.in/
+
+### Survey of India Toposheets
+- 1:50,000 scale topographic maps
+- Useful for baseline terrain analysis
+
+### Hyderabad Metropolitan Development Authority (HMDA)
+- Master Plan documents
+- Development regulations
+- https://www.hmda.gov.in/
+
+### GHMC (Greater Hyderabad Municipal Corporation)
+- Ward boundaries
+- Administrative data
+- https://www.ghmc.gov.in/
+
+---
+
+## Citation Guidelines
+
+When using this tool and data sources, please cite:
+
+**G20 NbS Framework**:
+UNEP (2021). *Smart, Sustainable and Resilient Cities: The Power of Nature-based Solutions*. 
+G20 Working Paper for the Italian Presidency.
+
+**OpenStreetMap**:
+OpenStreetMap contributors (2024). *OpenStreetMap*. 
+Retrieved from https://www.openstreetmap.org
+
+**Microsoft Building Footprints**:
+Microsoft (2023). *Global ML Building Footprints*. 
+Retrieved from https://github.com/microsoft/GlobalMLBuildingFootprints
+
+**Open-Meteo**:
+Open-Meteo (2024). *Historical Weather API*. CC BY 4.0. 
+Retrieved from https://open-meteo.com
+
+---
+
+## Data Processing Notes
+
+1. **Coordinate Systems**:
+   - Input data: WGS84 (EPSG:4326)
+   - Processing: UTM Zone 44N (EPSG:32644) for Hyderabad
+   - Output GeoJSON: WGS84 (EPSG:4326)
+
+2. **Caching**:
+   - OSM data is cached locally (30-day expiry)
+   - Cache location: `data/cache/`
+   - To refresh: delete cache files or use `--no-cache` flag
+
+3. **Data Quality**:
+   - Always verify critical analyses with ground truth
+   - OSM completeness varies; consider field validation
+   - Building heights are often estimated
+
+---
+
+*Last Updated: 2024-12-01*
+
