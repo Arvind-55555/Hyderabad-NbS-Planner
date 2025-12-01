@@ -16,12 +16,19 @@ Unlike static urban planning models, this tool:
 
 ### Key Features
 
-- **Real-time Infrastructure Fetching**: Building footprints, road networks, green/blue spaces from OSM
-- **Climate Analysis**: Historical wind data to determine prevailing wind directions
-- **Urban Morphology Computation**: Calculates density, roughness length, and ventilation potential
-- **NbS Decision Engine**: Recommends interventions (green roofs, urban forests, ventilation corridors, etc.)
-- **Advanced Visualizations**: Multi-layer maps, statistics dashboards, and export capabilities
-- **Modular Architecture**: Easy to extend and customize for other cities
+- 🌍 **Real-time Infrastructure Fetching**: Building footprints, road networks, green/blue spaces from OSM
+- 🌤️ **Climate Analysis**: Historical wind data to determine prevailing wind directions
+- 🏙️ **Urban Morphology Computation**: Calculates density, roughness length, and ventilation potential
+- 🌳 **NbS Decision Engine**: Recommends interventions (green roofs, urban forests, ventilation corridors, etc.)
+- 📊 **Advanced Visualizations**: Multi-layer maps, statistics dashboards, and export capabilities
+- 🌐 **Interactive Web Dashboard**: Streamlit-powered interface with 6 feature-rich tabs
+- 🔧 **Modular Architecture**: Easy to extend and customize for other cities
+
+### 🎯 Live Demo
+
+**[🚀 Launch Web Dashboard Locally](http://localhost:8501)** - Run `streamlit run web_app.py`
+
+Want to deploy online? See [Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md)
 
 ---
 
@@ -48,16 +55,25 @@ Hyderabad_Nbs/
 │   └── exports/               # GeoJSON/CSV exports
 ├── tools/
 │   ├── download_ms_data.py    # Helper for Microsoft Building Footprints
-│   └── batch_process.py       # Batch processing for multiple locations
+│   ├── batch_process.py       # Batch processing for multiple locations
+│   └── visualize_results.py   # Enhanced visualization generator
 ├── docs/
-│   ├── METHODOLOGY.md         # Detailed methodology documentation
-│   ├── NBS_GUIDELINES.md      # G20 NbS implementation guidelines
-│   └── API_REFERENCE.md       # API documentation
+│   ├── METHODOLOGY.md         # Detailed methodology documentation (23 pages)
+│   ├── NBS_GUIDELINES.md      # G20 NbS implementation guidelines (25 pages)
+│   ├── PROJECT_SUMMARY.md     # Project setup summary
+│   ├── COMPLETE_PROJECT_SUMMARY.md  # Full project documentation
+│   ├── BUGFIXES.md            # Issues resolved
+│   ├── VISUALIZATION_SUMMARY.md     # Visualization guide
+│   ├── WEB_DASHBOARD_GUIDE.md       # Web dashboard manual
+│   ├── DEPLOYMENT_INSTRUCTIONS.md   # Deployment guide
+│   └── STREAMLIT_DEPLOY_GUIDE.md    # Streamlit Cloud guide
 ├── tests/
 │   └── test_modules.py        # Unit tests (optional)
 ├── main.py                    # Main execution script
+├── web_app.py                 # 🌐 Interactive web dashboard (Streamlit)
 ├── requirements.txt           # Python dependencies
 ├── .gitignore                 # Git ignore rules
+├── QUICK_DEPLOY.txt           # Quick deployment guide
 └── README.md                  # This file
 ```
 
@@ -168,8 +184,29 @@ nbs_plan = run_nbs_planning(analyzed, wind_dir=270)
 ### Batch Processing Multiple Locations
 
 ```bash
-python tools/batch_process.py --locations locations.csv
+# Create sample locations file
+python tools/batch_process.py --create-sample
+
+# Process multiple locations
+python tools/batch_process.py --csv locations.csv
 ```
+
+### Launch Interactive Web Dashboard
+
+```bash
+streamlit run web_app.py
+```
+
+Access at: http://localhost:8501
+
+**Features:**
+- 🗺️ Interactive map with clickable cells
+- 📊 6 tabs: Interventions, Benefits, Morphology, Data Tables, Reports
+- 💾 Download capabilities (reports, CSV, charts)
+- 📱 Mobile-responsive
+- 🔄 Real-time filtering and exploration
+
+See [Web Dashboard Guide](docs/WEB_DASHBOARD_GUIDE.md) for complete documentation.
 
 ---
 
@@ -359,6 +396,82 @@ CACHE_EXPIRY_DAYS = 30  # Re-fetch after 30 days
 
 ---
 
+## 📚 Documentation
+
+### 📖 Complete Documentation Suite
+
+This project includes comprehensive documentation covering all aspects of the NbS Planner:
+
+#### 🚀 **Getting Started**
+- **[Project Summary](docs/PROJECT_SUMMARY.md)** - Overview of features and setup completion
+- **[Complete Project Summary](docs/COMPLETE_PROJECT_SUMMARY.md)** - Full documentation with usage examples
+
+#### 🔬 **Technical Documentation**
+- **[Methodology](docs/METHODOLOGY.md)** - Technical details, formulas, and algorithms (23 pages)
+  - Data acquisition methods
+  - Urban morphology calculations
+  - NbS decision logic
+  - Benefit quantification
+  - Validation and limitations
+- **[Bug Fixes](docs/BUGFIXES.md)** - Issues resolved and solutions implemented
+
+#### 🌳 **Implementation & Planning**
+- **[NbS Implementation Guidelines](docs/NBS_GUIDELINES.md)** - Complete implementation guide (25 pages)
+  - G20 NbS 8 principles explained
+  - Detailed specifications for each NbS type (green roofs, urban forests, etc.)
+  - 10-year phased implementation roadmap
+  - Financing mechanisms (CSR, green bonds, PES)
+  - Policy integration strategies
+  - Case studies from Singapore, China, Milan
+  - Native species recommendations for Hyderabad
+
+#### 📊 **Visualization & Results**
+- **[Visualization Summary](docs/VISUALIZATION_SUMMARY.md)** - Overview of all generated charts
+- **[Visualization Guide](outputs/visualizations/VISUALIZATIONS_GUIDE.md)** - Detailed interpretation guide for each chart
+
+#### 🌐 **Web Dashboard & Deployment**
+- **[Web Dashboard Guide](docs/WEB_DASHBOARD_GUIDE.md)** - Complete manual for the interactive Streamlit dashboard
+  - Dashboard features and navigation
+  - Interactive controls
+  - Download capabilities
+  - Customization options
+- **[Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Step-by-step guide to deploy your dashboard online
+- **[Streamlit Deploy Guide](docs/STREAMLIT_DEPLOY_GUIDE.md)** - Comprehensive deployment documentation
+
+#### 📁 **Data Sources**
+- **[Data References](data/references.txt)** - Complete list with download instructions
+  - Microsoft Building Footprints
+  - WorldPop population data
+  - OpenStreetMap
+  - Open-Meteo weather API
+  - WAQI air quality
+
+---
+
+## 🌐 Web Dashboard
+
+### Interactive Dashboard
+
+Launch the interactive web interface:
+
+```bash
+streamlit run web_app.py
+```
+
+Then open: **http://localhost:8501**
+
+**Features:**
+- 🗺️ Interactive map with clickable grid cells
+- 📊 6 feature-rich tabs (Interventions, Benefits, Morphology, etc.)
+- 📈 Real-time data filtering and exploration
+- 💾 Download reports and data exports
+- 📱 Mobile-responsive design
+
+**Deploy Online:**
+Follow the [Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md) to publish your dashboard to Streamlit Cloud (free!) and get a public URL.
+
+---
+
 ## References
 
 ### Key Documents
@@ -385,10 +498,13 @@ Contributions are welcome! Areas for improvement:
 
 - [ ] Add Sky View Factor (SVF) calculation using ray-tracing
 - [ ] Integrate WorldPop raster for population-weighted prioritization
-- [ ] Add cost-benefit analysis module
+- [x] ~~Add cost-benefit analysis module~~ ✅ Completed
 - [ ] Support for other Indian cities
-- [ ] Web-based interactive dashboard
+- [x] ~~Web-based interactive dashboard~~ ✅ Completed (Streamlit)
 - [ ] Integration with Telangana government APIs
+- [ ] Real-time data streaming
+- [ ] Machine learning for NbS optimization
+- [ ] API endpoint for programmatic access
 
 ---
 
@@ -403,17 +519,25 @@ Data sources have their own licenses:
 
 ---
 
-## 👨Author & Contact
+## Author & Contact
 
 Developed for urban climate resilience and sustainable city planning in Hyderabad.
 
 For questions, suggestions, or collaborations:
-- **GitHub Issues**: Report issues or request features
-- **Email**: arvind.saane.111@gmail.com
+- **GitHub Issues**: [Report issues or request features]
+- **Email**: [Your contact email]
+- **Live Dashboard**: [Your Streamlit app URL once deployed]
+
+### Quick Links
+
+- 📖 **[Full Documentation](docs/)** - Complete documentation suite
+- 🌐 **[Deploy Guide](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Publish your dashboard online
+- 🔬 **[Methodology](docs/METHODOLOGY.md)** - Technical details
+- 🌳 **[Implementation Guide](docs/NBS_GUIDELINES.md)** - G20 NbS framework
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **UNEP** for the G20 NbS Working Paper framework
 - **Microsoft AI for Earth** for building footprint data
@@ -421,4 +545,4 @@ For questions, suggestions, or collaborations:
 - **Telangana Government** for open data initiatives
 
 ---
-**Built with ❤️ for Hyderabad's sustainable urban future**
+**Built for Hyderabad's sustainable urban future**
