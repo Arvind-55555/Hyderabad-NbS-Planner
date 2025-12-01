@@ -24,11 +24,9 @@ Unlike static urban planning models, this tool:
 - 🌐 **Interactive Web Dashboard**: Streamlit-powered interface with 6 feature-rich tabs
 - 🔧 **Modular Architecture**: Easy to extend and customize for other cities
 
-### Live Demo
+### Live Artifact
 
-**[ Launch Web Dashboard Locally](http://localhost:8501)** - Run `streamlit run web_app.py`
-
-Want to deploy online? See [Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md)
+[![View Live Dashboard](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
 
 ---
 
