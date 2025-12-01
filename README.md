@@ -24,9 +24,9 @@ Unlike static urban planning models, this tool:
 - 🌐 **Interactive Web Dashboard**: Streamlit-powered interface with 6 feature-rich tabs
 - 🔧 **Modular Architecture**: Easy to extend and customize for other cities
 
-### 🎯 Live Demo
+### Live Demo
 
-**[🚀 Launch Web Dashboard Locally](http://localhost:8501)** - Run `streamlit run web_app.py`
+**[ Launch Web Dashboard Locally](http://localhost:8501)** - Run `streamlit run web_app.py`
 
 Want to deploy online? See [Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md)
 
@@ -396,17 +396,17 @@ CACHE_EXPIRY_DAYS = 30  # Re-fetch after 30 days
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 ### 📖 Complete Documentation Suite
 
 This project includes comprehensive documentation covering all aspects of the NbS Planner:
 
-#### 🚀 **Getting Started**
+####  **Getting Started**
 - **[Project Summary](docs/PROJECT_SUMMARY.md)** - Overview of features and setup completion
 - **[Complete Project Summary](docs/COMPLETE_PROJECT_SUMMARY.md)** - Full documentation with usage examples
 
-#### 🔬 **Technical Documentation**
+####  **Technical Documentation**
 - **[Methodology](docs/METHODOLOGY.md)** - Technical details, formulas, and algorithms (23 pages)
   - Data acquisition methods
   - Urban morphology calculations
@@ -415,7 +415,7 @@ This project includes comprehensive documentation covering all aspects of the Nb
   - Validation and limitations
 - **[Bug Fixes](docs/BUGFIXES.md)** - Issues resolved and solutions implemented
 
-#### 🌳 **Implementation & Planning**
+#### **Implementation & Planning**
 - **[NbS Implementation Guidelines](docs/NBS_GUIDELINES.md)** - Complete implementation guide (25 pages)
   - G20 NbS 8 principles explained
   - Detailed specifications for each NbS type (green roofs, urban forests, etc.)
@@ -425,11 +425,11 @@ This project includes comprehensive documentation covering all aspects of the Nb
   - Case studies from Singapore, China, Milan
   - Native species recommendations for Hyderabad
 
-#### 📊 **Visualization & Results**
+#### **Visualization & Results**
 - **[Visualization Summary](docs/VISUALIZATION_SUMMARY.md)** - Overview of all generated charts
 - **[Visualization Guide](outputs/visualizations/VISUALIZATIONS_GUIDE.md)** - Detailed interpretation guide for each chart
 
-#### 🌐 **Web Dashboard & Deployment**
+#### **Web Dashboard & Deployment**
 - **[Web Dashboard Guide](docs/WEB_DASHBOARD_GUIDE.md)** - Complete manual for the interactive Streamlit dashboard
   - Dashboard features and navigation
   - Interactive controls
@@ -438,7 +438,7 @@ This project includes comprehensive documentation covering all aspects of the Nb
 - **[Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Step-by-step guide to deploy your dashboard online
 - **[Streamlit Deploy Guide](docs/STREAMLIT_DEPLOY_GUIDE.md)** - Comprehensive deployment documentation
 
-#### 📁 **Data Sources**
+#### **Data Sources**
 - **[Data References](data/references.txt)** - Complete list with download instructions
   - Microsoft Building Footprints
   - WorldPop population data
@@ -448,7 +448,7 @@ This project includes comprehensive documentation covering all aspects of the Nb
 
 ---
 
-## 🌐 Web Dashboard
+## Web Dashboard
 
 ### Interactive Dashboard
 
@@ -530,10 +530,10 @@ For questions, suggestions, or collaborations:
 
 ### Quick Links
 
-- 📖 **[Full Documentation](docs/)** - Complete documentation suite
-- 🌐 **[Deploy Guide](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Publish your dashboard online
-- 🔬 **[Methodology](docs/METHODOLOGY.md)** - Technical details
-- 🌳 **[Implementation Guide](docs/NBS_GUIDELINES.md)** - G20 NbS framework
+- **[Full Documentation](docs/)** - Complete documentation suite
+- **[Deploy Guide](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Publish your dashboard online
+- **[Methodology](docs/METHODOLOGY.md)** - Technical details
+- **[Implementation Guide](docs/NBS_GUIDELINES.md)** - G20 NbS framework
 
 ---
 
