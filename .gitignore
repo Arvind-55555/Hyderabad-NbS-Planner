@@ -54,21 +54,18 @@ data/references/*.geojsonl
 data/references/*.tif
 !data/references.txt
 
-# Outputs - Keep CSV files and directory structure for Streamlit app
-# Large images and logs are ignored, but CSV data and guide files are kept
-outputs/**/*.png
-outputs/**/*.pdf
-outputs/**/*.jpg
-outputs/**/*.jpeg
-outputs/**/*.svg
-outputs/**/nbs_interventions_*.geojson
+# Outputs - Keep essential files for Streamlit app
+# Exclude timestamped reports and statistics but keep visualizations and data
 outputs/**/nbs_report_*.md
 outputs/**/nbs_statistics_*.json
 nbs_planner.log
 
-# Keep these output files for Streamlit app
+# Keep these output files for Streamlit app to function
 !outputs/reports/csv/*.csv
+!outputs/reports/nbs_interventions_*.geojson
+!outputs/visualizations/*.png
 !outputs/visualizations/VISUALIZATIONS_GUIDE.md
+!outputs/maps/*.png
 !outputs/**/.gitkeep
 
 # Temporary files
