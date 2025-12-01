@@ -1,0 +1,5 @@
+NbS_Type,Num_Cells,Total_Area_sqm,Total_Area_hectares,Total_Cost_INR,Total_Cost_Crores,climate_adaptation,biodiversity,air_quality,water_management,social_wellbeing,economic_value,cooling_effect_celsius,pm25_removal_kg_yr,carbon_sequestration_kg_yr,runoff_reduction_percent,estimated_trees,overall_score,Priority
+Green Roof,2,45000,4.5,6750000,0.675,10,6,6,10,4,8,7.0,112.5,67500.0,120.0,0,146.66666666666666,1
+Ventilation Corridor,24,540000,54.0,54000000,5.4,120,72,120,48,96,72,60.0,40.32,59136.0,0.0,2688,1760.0,3
+Permeable Pavement,107,2407500,240.75,192600000,19.26,321,107,214,535,214,428,160.5,0.0,0.0,8560.0,0,6063.333333333334,4
+Rain Garden,84,1890000,189.0,132300000,13.23,336,336,252,420,336,336,126.0,0.0,0.0,7560.0,0,6720.0,6
