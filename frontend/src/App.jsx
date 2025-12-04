@@ -47,9 +47,6 @@ function App() {
         if (!response || !response.ok) {
           throw new Error('Failed to load buildings data');
         }
-        if (!response.ok) {
-          throw new Error('Failed to load buildings data');
-        }
         const text = await response.text();
         
         Papa.parse(text, {
