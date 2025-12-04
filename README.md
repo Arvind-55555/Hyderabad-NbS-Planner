@@ -28,7 +28,7 @@ Unlike static urban planning models, this tool:
 
 [![View Live Dashboard](https://img.shields.io/badge/View%20Dashboard-%230077B5.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
 
-[![View Live Dashboard](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
+[![View 4D Visualization](https://img.shields.io/badge/View%204D%20Engine-%23667eea.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs-4d.streamlit.app/)
 
 ---
 
