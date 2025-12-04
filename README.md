@@ -24,11 +24,9 @@ Unlike static urban planning models, this tool:
 - 🌐 **Interactive Web Dashboard**: Streamlit-powered interface with 6 feature-rich tabs
 - 🔧 **Modular Architecture**: Easy to extend and customize for other cities
 
-### Live Artifacts
+### Live Artifact
 
-[![View Live Dashboard](https://img.shields.io/badge/View%20Dashboard-%230077B5.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://claude.ai/public/artifacts/52da1176-d217-42a0-b870-a9de9408aab9)
-
-[![View 4D Visualization](https://img.shields.io/badge/View%204D%20Engine-%23667eea.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs-4d.streamlit.app/)
+[![View 4D Visualization](https://img.shields.io/badge/View%204D%20Engine-%23667eea.svg?style=for-the-badge&logo=react&logoColor=white)](https://arvind-55555.github.io/Hyderabad-NbS-Planner/)
 
 ---
 
@@ -58,9 +56,16 @@ Hyderabad_Nbs/
 │   ├── batch_process.py       # Batch processing for multiple locations
 │   ├── visualize_results.py   # Enhanced visualization generator
 │   ├── fetch_data.py          # Google Open Buildings data fetcher
-│   ├── fetch_real_buildings.py # OpenStreetMap building data fetcher
-│   ├── nbs_engine.py          # 4D visualization engine (main)
-│   └── validate_4d_setup.py   # Pre-flight validation tool
+│   └── fetch_real_buildings.py # OpenStreetMap building data fetcher
+├── frontend/                  # React 4D Visualization App
+│   ├── src/
+│   │   ├── components/        # React components
+│   │   ├── utils/            # Utilities and constants
+│   │   ├── App.jsx           # Main app component
+│   │   └── main.jsx          # Entry point
+│   ├── public/               # Static assets
+│   ├── package.json          # Node dependencies
+│   └── vite.config.js        # Vite configuration
 ├── docs/
 │   ├── METHODOLOGY.md         # Detailed methodology documentation
 │   ├── NBS_GUIDELINES.md      # G20 NbS implementation guidelines
@@ -69,11 +74,9 @@ Hyderabad_Nbs/
 ├── tests/
 │   └── test_modules.py        # Unit tests (optional)
 ├── main.py                    # Main execution script
-├── web_app.py                 # 🌐 Interactive web dashboard (Streamlit)
 ├── requirements.txt           # Python dependencies
-├── .streamlit/                # Streamlit configuration
-│   ├── config.toml           # Streamlit theme and settings
-│   └── secrets.toml.example   # Example secrets file
+├── .github/workflows/         # GitHub Actions for deployment
+│   └── deploy.yml             # Auto-deploy to GitHub Pages
 ├── .gitignore                 # Git ignore rules
 └── README.md                  # This file
 ```
@@ -436,50 +439,50 @@ This project includes comprehensive documentation covering all aspects of the Nb
 
 ---
 
-## Web Dashboard
+## 4D Visualization Engine
 
-### Interactive Dashboards
-
-#### Main Dashboard
-Launch the interactive web interface:
-
-```bash
-streamlit run web_app.py
-```
-
-Then open: **http://localhost:8501**
-
-**Features:**
-- 🗺️ Interactive map with clickable grid cells
-- 📊 6 feature-rich tabs (Interventions, Benefits, Morphology, etc.)
-- 📈 Real-time data filtering and exploration
-- 💾 Download reports and data exports
-- 📱 Mobile-responsive design
+### React Application
 
 #### 4D Visualization Engine
-Launch the enhanced 4D visualization:
+Launch the React-based 4D visualization:
 
 ```bash
-streamlit run tools/nbs_engine.py
+cd frontend
+npm install
+npm run dev
 ```
 
-Or use the automation script:
-
-```bash
-./run_4d_visualization.sh
-```
+Then open: **http://localhost:3000**
 
 **Features:**
 - 🌍 **Real-time 3D visualization** with 5,000+ buildings from OpenStreetMap
 - 🎚️ **Temporal slider** for BEFORE/AFTER scenarios (0% → 100%)
-- 📊 **Interactive charts** showing temperature and CO₂ trends
+- 📊 **Interactive statistics** showing temperature and CO₂ trends
 - 🎥 **4 camera presets** (Default 3D, Top Down, Oblique, Street Level)
 - 🌳 **217 NbS intervention zones** with enhanced visualization
-- 📈 **Comprehensive metrics** dashboard with 12+ indicators
-- ⚡ **Performance optimized** with smart sampling
+- 📈 **Comprehensive metrics** dashboard
+- ⚡ **Performance optimized** with React and WebGL
+- 📱 **Fully responsive** design
 
-**Deploy Online:**
-Deploy to Streamlit Cloud (free!) by connecting your GitHub repository at [share.streamlit.io](https://share.streamlit.io). Set the main file to `web_app.py` for the dashboard or `tools/nbs_engine.py` for the 4D visualization.
+**Build for Production:**
+
+```bash
+cd frontend
+npm run build
+```
+
+**Deploy to GitHub Pages:**
+
+The app automatically deploys via GitHub Actions when you push to `main` branch.
+
+Or deploy manually:
+
+```bash
+cd frontend
+npm run deploy
+```
+
+**Live Site:** https://arvind-55555.github.io/Hyderabad-NbS-Planner/
 
 ---
 
