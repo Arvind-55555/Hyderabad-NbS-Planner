@@ -25,6 +25,7 @@ Unlike static urban planning models, this tool:
 - 🔧 **Modular Architecture**: Easy to extend and customize for other cities
 
 ### Live Artifact
+[![View Artifact](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://claude.ai/public/artifacts/52da1176-d217-42a0-b870-a9de9408aab9)
 
 [![View 4D Visualization](https://img.shields.io/badge/View%204D%20Engine-%23667eea.svg?style=for-the-badge&logo=react&logoColor=white)](https://arvind-55555.github.io/Hyderabad-NbS-Planner/)
 
