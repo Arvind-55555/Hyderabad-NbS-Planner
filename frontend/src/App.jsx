@@ -24,9 +24,12 @@ function App() {
   useEffect(() => {
     async function loadBuildings() {
       try {
-        // Try GitHub Pages path first, then fallback to root
+        // Try multiple paths for different deployment platforms
+        const basePath = window.location.pathname.includes('/Hyderabad-NbS-Planner/') 
+          ? '/Hyderabad-NbS-Planner' 
+          : '';
         const paths = [
-          '/Hyderabad-NbS-Planner/data/hyderabad_clipped.csv',
+          `${basePath}/data/hyderabad_clipped.csv`,
           '/data/hyderabad_clipped.csv',
           './data/hyderabad_clipped.csv'
         ];
@@ -83,9 +86,12 @@ function App() {
   useEffect(() => {
     async function loadNbsData() {
       try {
-        // Try multiple paths for GitHub Pages compatibility
+        // Try multiple paths for different deployment platforms
+        const basePath = window.location.pathname.includes('/Hyderabad-NbS-Planner/') 
+          ? '/Hyderabad-NbS-Planner' 
+          : '';
         const paths = [
-          '/Hyderabad-NbS-Planner/outputs/reports/nbs_interventions_20251201_124521.geojson',
+          `${basePath}/outputs/reports/nbs_interventions_20251201_124521.geojson`,
           '/outputs/reports/nbs_interventions_20251201_124521.geojson',
           './outputs/reports/nbs_interventions_20251201_124521.geojson'
         ];

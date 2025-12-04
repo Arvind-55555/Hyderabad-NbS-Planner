@@ -1,0 +1,20 @@
+# Ignore Python files and directories for Vercel deployment
+requirements.txt
+main.py
+src/
+tools/
+data/
+outputs/
+cache/
+docs/
+*.py
+*.pyc
+__pycache__/
+.python-version
+venv/
+env/
+.env.local
+
+# Keep only frontend for React deployment
+!frontend/
+

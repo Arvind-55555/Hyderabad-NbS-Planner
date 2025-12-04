@@ -1,0 +1,16 @@
+{
+  "name": "hyderabad-nbs-planner",
+  "version": "1.0.0",
+  "description": "Hyderabad Nature-based Solutions Planner - 4D Visualization",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "start": "cd frontend && npm run preview"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
+
