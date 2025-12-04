@@ -28,7 +28,7 @@ Unlike static urban planning models, this tool:
 
 [![View Live Dashboard](https://img.shields.io/badge/View%20Dashboard-%230077B5.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
 
-[![View 4D Visualization](https://img.shields.io/badge/View%204D%20Engine-%23667eea.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs-4d.streamlit.app/)
+[![View Live Dashboard](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
 
 ---
 
@@ -70,7 +70,6 @@ Hyderabad_Nbs/
 │   └── test_modules.py        # Unit tests (optional)
 ├── main.py                    # Main execution script
 ├── web_app.py                 # 🌐 Interactive web dashboard (Streamlit)
-├── streamlit_app.py          # Entry point for 4D engine deployment
 ├── requirements.txt           # Python dependencies
 ├── .streamlit/                # Streamlit configuration
 │   ├── config.toml           # Streamlit theme and settings
