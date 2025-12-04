@@ -24,9 +24,11 @@ Unlike static urban planning models, this tool:
 - 🌐 **Interactive Web Dashboard**: Streamlit-powered interface with 6 feature-rich tabs
 - 🔧 **Modular Architecture**: Easy to extend and customize for other cities
 
-### Live Artifact
+### Live Artifacts
 
-[![View Live Dashboard](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
+[![View Live Dashboard](https://img.shields.io/badge/View%20Dashboard-%230077B5.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
+
+[![View 4D Visualization](https://img.shields.io/badge/View%204D%20Engine-%23667eea.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://hyderabad-nbs-4d.streamlit.app/)
 
 ---
 
@@ -54,24 +56,26 @@ Hyderabad_Nbs/
 ├── tools/
 │   ├── download_ms_data.py    # Helper for Microsoft Building Footprints
 │   ├── batch_process.py       # Batch processing for multiple locations
-│   └── visualize_results.py   # Enhanced visualization generator
+│   ├── visualize_results.py   # Enhanced visualization generator
+│   ├── fetch_data.py          # Google Open Buildings data fetcher
+│   ├── fetch_real_buildings.py # OpenStreetMap building data fetcher
+│   ├── nbs_engine.py          # 4D visualization engine (main)
+│   └── validate_4d_setup.py   # Pre-flight validation tool
 ├── docs/
-│   ├── METHODOLOGY.md         # Detailed methodology documentation (23 pages)
-│   ├── NBS_GUIDELINES.md      # G20 NbS implementation guidelines (25 pages)
+│   ├── METHODOLOGY.md         # Detailed methodology documentation
+│   ├── NBS_GUIDELINES.md      # G20 NbS implementation guidelines
 │   ├── PROJECT_SUMMARY.md     # Project setup summary
-│   ├── COMPLETE_PROJECT_SUMMARY.md  # Full project documentation
-│   ├── BUGFIXES.md            # Issues resolved
-│   ├── VISUALIZATION_SUMMARY.md     # Visualization guide
-│   ├── WEB_DASHBOARD_GUIDE.md       # Web dashboard manual
-│   ├── DEPLOYMENT_INSTRUCTIONS.md   # Deployment guide
-│   └── STREAMLIT_DEPLOY_GUIDE.md    # Streamlit Cloud guide
+│   └── README.md              # Documentation index
 ├── tests/
 │   └── test_modules.py        # Unit tests (optional)
 ├── main.py                    # Main execution script
 ├── web_app.py                 # 🌐 Interactive web dashboard (Streamlit)
+├── streamlit_app.py          # Entry point for 4D engine deployment
 ├── requirements.txt           # Python dependencies
+├── .streamlit/                # Streamlit configuration
+│   ├── config.toml           # Streamlit theme and settings
+│   └── secrets.toml.example   # Example secrets file
 ├── .gitignore                 # Git ignore rules
-├── QUICK_DEPLOY.txt           # Quick deployment guide
 └── README.md                  # This file
 ```
 
@@ -204,7 +208,7 @@ Access at: http://localhost:8501
 - 📱 Mobile-responsive
 - 🔄 Real-time filtering and exploration
 
-See [Web Dashboard Guide](docs/WEB_DASHBOARD_GUIDE.md) for complete documentation.
+See [Project Summary](docs/PROJECT_SUMMARY.md) for complete documentation.
 
 ---
 
@@ -402,7 +406,6 @@ This project includes comprehensive documentation covering all aspects of the Nb
 
 ####  **Getting Started**
 - **[Project Summary](docs/PROJECT_SUMMARY.md)** - Overview of features and setup completion
-- **[Complete Project Summary](docs/COMPLETE_PROJECT_SUMMARY.md)** - Full documentation with usage examples
 
 ####  **Technical Documentation**
 - **[Methodology](docs/METHODOLOGY.md)** - Technical details, formulas, and algorithms (23 pages)
@@ -411,10 +414,8 @@ This project includes comprehensive documentation covering all aspects of the Nb
   - NbS decision logic
   - Benefit quantification
   - Validation and limitations
-- **[Bug Fixes](docs/BUGFIXES.md)** - Issues resolved and solutions implemented
-
 #### **Implementation & Planning**
-- **[NbS Implementation Guidelines](docs/NBS_GUIDELINES.md)** - Complete implementation guide (25 pages)
+- **[NbS Implementation Guidelines](docs/NBS_GUIDELINES.md)** - Complete implementation guide
   - G20 NbS 8 principles explained
   - Detailed specifications for each NbS type (green roofs, urban forests, etc.)
   - 10-year phased implementation roadmap
@@ -424,17 +425,7 @@ This project includes comprehensive documentation covering all aspects of the Nb
   - Native species recommendations for Hyderabad
 
 #### **Visualization & Results**
-- **[Visualization Summary](docs/VISUALIZATION_SUMMARY.md)** - Overview of all generated charts
 - **[Visualization Guide](outputs/visualizations/VISUALIZATIONS_GUIDE.md)** - Detailed interpretation guide for each chart
-
-#### **Web Dashboard & Deployment**
-- **[Web Dashboard Guide](docs/WEB_DASHBOARD_GUIDE.md)** - Complete manual for the interactive Streamlit dashboard
-  - Dashboard features and navigation
-  - Interactive controls
-  - Download capabilities
-  - Customization options
-- **[Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Step-by-step guide to deploy your dashboard online
-- **[Streamlit Deploy Guide](docs/STREAMLIT_DEPLOY_GUIDE.md)** - Comprehensive deployment documentation
 
 #### **Data Sources**
 - **[Data References](data/references.txt)** - Complete list with download instructions
@@ -448,8 +439,9 @@ This project includes comprehensive documentation covering all aspects of the Nb
 
 ## Web Dashboard
 
-### Interactive Dashboard
+### Interactive Dashboards
 
+#### Main Dashboard
 Launch the interactive web interface:
 
 ```bash
@@ -465,8 +457,30 @@ Then open: **http://localhost:8501**
 - 💾 Download reports and data exports
 - 📱 Mobile-responsive design
 
+#### 4D Visualization Engine
+Launch the enhanced 4D visualization:
+
+```bash
+streamlit run tools/nbs_engine.py
+```
+
+Or use the automation script:
+
+```bash
+./run_4d_visualization.sh
+```
+
+**Features:**
+- 🌍 **Real-time 3D visualization** with 5,000+ buildings from OpenStreetMap
+- 🎚️ **Temporal slider** for BEFORE/AFTER scenarios (0% → 100%)
+- 📊 **Interactive charts** showing temperature and CO₂ trends
+- 🎥 **4 camera presets** (Default 3D, Top Down, Oblique, Street Level)
+- 🌳 **217 NbS intervention zones** with enhanced visualization
+- 📈 **Comprehensive metrics** dashboard with 12+ indicators
+- ⚡ **Performance optimized** with smart sampling
+
 **Deploy Online:**
-Follow the [Deployment Instructions](docs/DEPLOYMENT_INSTRUCTIONS.md) to publish your dashboard to Streamlit Cloud (free!) and get a public URL.
+Deploy to Streamlit Cloud (free!) by connecting your GitHub repository at [share.streamlit.io](https://share.streamlit.io). Set the main file to `web_app.py` for the dashboard or `tools/nbs_engine.py` for the 4D visualization.
 
 ---
 
@@ -528,10 +542,10 @@ For questions, suggestions, or collaborations:
 
 ### Quick Links
 
-- **[Full Documentation](docs/)** - Complete documentation suite
-- **[Deploy Guide](docs/DEPLOYMENT_INSTRUCTIONS.md)** - Publish your dashboard online
-- **[Methodology](docs/METHODOLOGY.md)** - Technical details
-- **[Implementation Guide](docs/NBS_GUIDELINES.md)** - G20 NbS framework
+- **[Methodology](docs/METHODOLOGY.md)** - Technical details and methodology
+- **[NbS Guidelines](docs/NBS_GUIDELINES.md)** - G20 NbS framework implementation
+- **[Project Summary](docs/PROJECT_SUMMARY.md)** - Project overview and setup
+- **[Documentation Index](docs/README.md)** - Complete documentation guide
 
 ---
 

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hyderabad NbS GeoJSON Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        #map { position: absolute; top: 60px; bottom: 0; width: 100%; }
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .header h1 { margin: 0; font-size: 24px; }
+        .download-btn {
+            background: white;
+            color: #27ae60;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .download-btn:hover { background: #f0f0f0; }
+        .legend {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .legend h4 { margin: 0 0 10px 0; }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 15px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌳 Hyderabad NbS Interventions Map</h1>
+        <a href="outputs/reports/nbs_interventions_20251201_124521.geojson" download class="download-btn">
+            📥 Download GeoJSON
+        </a>
+    </div>
+    
+    <div id="map"></div>
+    
+    <div class="legend">
+        <h4>NbS Types</h4>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #2ecc71;"></div>
+            <span>Green Roof</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #3498db;"></div>
+            <span>Ventilation Corridor</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #95a5a6;"></div>
+            <span>Permeable Pavement</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #16a085;"></div>
+            <span>Rain Garden</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ecf0f1;"></div>
+            <span>None</span>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([17.3616, 78.4747], 13);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        // Color mapping for NbS types
+        var colors = {
+            'Green Roof': '#2ecc71',
+            'Ventilation Corridor': '#3498db',
+            'Permeable Pavement': '#95a5a6',
+            'Rain Garden': '#16a085',
+            'None': '#ecf0f1'
+        };
+        
+        // Load GeoJSON
+        fetch('outputs/reports/nbs_interventions_20251201_124521.geojson')
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    style: function(feature) {
+                        var nbsType = feature.properties.Proposed_NbS || 'None';
+                        return {
+                            fillColor: colors[nbsType] || '#95a5a6',
+                            weight: 1,
+                            opacity: 1,
+                            color: 'white',
+                            fillOpacity: 0.7
+                        };
+                    },
+                    onEachFeature: function(feature, layer) {
+                        var props = feature.properties;
+                        var popupContent = `
+                            <strong>Grid Cell #${props.grid_id}</strong><br>
+                            <strong>NbS Type:</strong> ${props.Proposed_NbS}<br>
+                            <strong>Density:</strong> ${props.density.toFixed(3)}<br>
+                            <strong>Roughness:</strong> ${props.roughness.toFixed(3)} m<br>
+                            <strong>Avg Height:</strong> ${props.avg_height.toFixed(1)} m<br>
+                            <strong>SVF:</strong> ${props.svf.toFixed(3)}<br>
+                            <strong>Priority:</strong> ${props.priority}
+                        `;
+                        layer.bindPopup(popupContent);
+                    }
+                }).addTo(map);
+                
+                // Fit map to data bounds
+                map.fitBounds([
+                    [17.347, 78.460],
+                    [17.376, 78.480]
+                ]);
+            })
+            .catch(error => {
+                console.error('Error loading GeoJSON:', error);
+                alert('Error loading GeoJSON file. Make sure you open this file from the project directory.');
+            });
+    </script>
+</body>
+</html>
+

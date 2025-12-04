@@ -16,6 +16,7 @@ import folium
 from streamlit_folium import st_folium
 import base64
 from datetime import datetime
+import streamlit.components.v1 as components
 
 # Page config
 st.set_page_config(
@@ -444,13 +445,14 @@ def main():
     st.markdown("---")
     
     # Tabs
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
         "🗺️ Interactive Map",
         "📊 Interventions",
         "🌿 Benefits",
         "🏙️ Morphology",
         "📋 Data Tables",
-        "🖼️ Static Reports"
+        "🖼️ Static Reports",
+        "🎬 4D Visualization"
     ])
     
     # TAB 1: Interactive Map
@@ -676,12 +678,117 @@ def main():
         else:
             st.warning("Visualizations directory not found.")
     
+    # TAB 7: 4D Visualization
+    with tab7:
+        st.markdown("### 🎬 4D Before/After Visualization")
+        st.markdown("Interactive 3D visualization with temporal transitions powered by SpatialBound")
+        
+        # Check if SpatialBound project exists
+        spatialbound_info_path = Path('outputs/3d_data/spatialbound_project_info.json')
+        
+        if spatialbound_info_path.exists():
+            with open(spatialbound_info_path, 'r') as f:
+                project_info = json.load(f)
+            
+            st.success(f"✓ 4D Visualization available for project: {project_info['project_name']}")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.info(f"**Project ID:** {project_info['project_id']}")
+            with col2:
+                if st.button("🔗 Open in New Tab"):
+                    st.markdown(f"[Click here to view]({project_info['viewer_url']})", unsafe_allow_html=True)
+            
+            st.markdown("---")
+            
+            # Embed SpatialBound viewer
+            st.markdown("#### Embedded 4D Viewer")
+            st.markdown("*Use mouse to rotate, scroll to zoom, click timeline to change temporal state*")
+            
+            # Create iframe embed
+            viewer_url = project_info.get('viewer_url', '')
+            if viewer_url:
+                components.iframe(viewer_url, width=1200, height=800, scrolling=False)
+            
+            st.markdown("---")
+            
+            # Instructions
+            st.markdown("#### 🎮 Viewer Controls")
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                st.markdown("""
+                **Mouse Controls:**
+                - 🖱️ Left Click + Drag: Rotate
+                - 🖱️ Right Click + Drag: Pan
+                - 🎡 Scroll: Zoom in/out
+                """)
+            
+            with col2:
+                st.markdown("""
+                **Timeline:**
+                - ⏮️ BEFORE: Current state
+                - ▶️ Play: Animate transition
+                - ⏭️ AFTER: With NbS
+                """)
+            
+            with col3:
+                st.markdown("""
+                **Features:**
+                - 🏢 3D Buildings with heights
+                - 🌳 NbS interventions in 3D
+                - 📊 Click objects for info
+                """)
+            
+        else:
+            st.warning("⚠️ 4D visualization not yet generated")
+            st.markdown("""
+            To generate and view 4D visualization:
+            
+            1. **Generate 3D data:**
+               ```bash
+               python tools/generate_3d_data.py --no-upload
+               ```
+            
+            2. **Upload to SpatialBound:**
+               ```bash
+               export SPATIALBOUND_API_KEY="your-api-key"
+               python tools/generate_3d_data.py --project-name "Hyderabad NbS"
+               ```
+            
+            3. **Refresh this page** to see the embedded viewer
+            
+            ---
+            
+            **Need a SpatialBound API key?**
+            - Visit: [https://www.spatialbound.com/doc](https://www.spatialbound.com/doc)
+            - Sign up for an account
+            - Get your API key from dashboard
+            """)
+            
+            # Show sample 3D data status
+            st.markdown("#### 📊 3D Data Generation Status")
+            
+            data_3d_path = Path('outputs/3d_data')
+            if data_3d_path.exists():
+                cityjson_files = list(data_3d_path.glob('*.json'))
+                if cityjson_files:
+                    st.info(f"✓ Found {len(cityjson_files)} 3D data files ready for upload")
+                    
+                    for file in cityjson_files:
+                        st.text(f"  • {file.name}")
+                else:
+                    st.warning("No 3D data files found. Run the generator script first.")
+            else:
+                st.warning("3D data directory not found.")
+    
     # Footer
     st.markdown("---")
     st.markdown("""
     <div style='text-align: center; color: #666; padding: 20px;'>
         <p><b>Hyderabad Nature-based Solutions Planner v1.0</b></p>
         <p>Based on G20 NbS Working Paper Framework | Urban Climate Resilience Planning</p>
+        <p>4D Visualization powered by SpatialBound</p>
         <p>Generated: {}</p>
     </div>
     """.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), unsafe_allow_html=True)
