@@ -26,7 +26,7 @@ Unlike static urban planning models, this tool:
 
 ### Live Artifact
 
-[![View Live Dashboard](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://hyderabad-nbs.streamlit.app/)
+[![View Live Dashboard](https://img.shields.io/badge/View%20Artifact-%230077B5.svg?style=for-the-badge&logo=claude&logoColor=white)](https://claude.ai/public/artifacts/52da1176-d217-42a0-b870-a9de9408aab9)
 
 ---
 
