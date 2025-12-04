@@ -163,6 +163,10 @@
             text-align: center;
         }
         
+        .error-message h3 {
+            margin-bottom: 0.5rem;
+        }
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8rem;
@@ -225,9 +229,61 @@
         // Streamlit Cloud URL for 4D Engine
         const STREAMLIT_URL = 'https://hyderabad-nbs-4d.streamlit.app/';
         
+        // State tracking
+        let hasError = false;
+        let hasLoaded = false;
+        let timeoutId = null;
+        
         // Create iframe
         const container = document.getElementById('iframe-container');
         const loading = document.getElementById('loading');
+        
+        // Function to show error message
+        function showError(message, showDeployButton = true) {
+            hasError = true;
+            
+            // Clear timeout if it exists
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            loading.innerHTML = `
+                <div class="error-message">
+                    <h3>⚠️ ${message}</h3>
+                    <p>The 4D visualization engine needs to be deployed to Streamlit Cloud first.</p>
+                    ${showDeployButton ? `
+                    <p style="margin-top: 1rem;">
+                        <a href="https://share.streamlit.io" target="_blank" class="btn btn-primary" style="display: inline-block;">
+                            Deploy to Streamlit Cloud
+                        </a>
+                    </p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">
+                        Main file: <code>tools/nbs_engine.py</code>
+                    </p>
+                    ` : ''}
+                    <p style="margin-top: 1rem;">
+                        <a href="${STREAMLIT_URL}" target="_blank" class="btn btn-primary" style="display: inline-block; margin-top: 0.5rem;">
+                            Try Opening Directly
+                        </a>
+                    </p>
+                </div>
+            `;
+        }
+        
+        // Function to hide loading and show iframe
+        function showIframe(iframe) {
+            hasLoaded = true;
+            
+            // Clear timeout if it exists
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            loading.style.display = 'none';
+            iframe.style.display = 'block';
+        }
         
         // Check if Streamlit app is accessible
         function loadStreamlitApp() {
@@ -237,29 +293,32 @@
             iframe.allow = 'camera; microphone; geolocation';
             
             iframe.onload = function() {
-                loading.style.display = 'none';
-                iframe.style.display = 'block';
+                // Only show iframe if no error occurred
+                if (!hasError) {
+                    showIframe(iframe);
+                }
             };
             
+            // Note: iframe.onerror doesn't fire for cross-origin iframes
+            // We'll use a timeout instead to detect loading issues
             iframe.onerror = function() {
-                loading.innerHTML = `
-                    <div class="error-message">
-                        <h3>⚠️ Streamlit App Not Available</h3>
-                        <p>The 4D visualization engine needs to be deployed to Streamlit Cloud first.</p>
-                        <p style="margin-top: 1rem;">
-                            <a href="https://share.streamlit.io" target="_blank" class="btn btn-primary" style="display: inline-block;">
-                                Deploy to Streamlit Cloud
-                            </a>
-                        </p>
-                        <p style="margin-top: 1rem; font-size: 0.9rem;">
-                            Main file: <code>tools/nbs_engine.py</code>
-                        </p>
-                    </div>
-                `;
+                // This rarely fires for iframes, but handle it if it does
+                if (!hasLoaded && !hasError) {
+                    showError('Streamlit App Not Available', true);
+                }
             };
             
             iframe.style.display = 'none';
             container.appendChild(iframe);
+            
+            // Set timeout to detect if loading takes too long
+            // Only set timeout if we haven't already loaded or errored
+            timeoutId = setTimeout(function() {
+                // Only show timeout message if we haven't loaded and no error was shown
+                if (!hasLoaded && !hasError) {
+                    showError('Loading taking too long...', false);
+                }
+            }, 10000);
         }
         
         // Alternative: Redirect if iframe doesn't work
@@ -273,23 +332,6 @@
         
         // Load the app
         redirectToStreamlit();
-        
-        // Fallback: If iframe fails after 10 seconds, show redirect button
-        setTimeout(function() {
-            if (loading.style.display !== 'none') {
-                loading.innerHTML = `
-                    <div class="error-message">
-                        <h3>Loading taking too long...</h3>
-                        <p>Click the button below to open the 4D visualization in a new window.</p>
-                        <p style="margin-top: 1rem;">
-                            <a href="${STREAMLIT_URL}" target="_blank" class="btn btn-primary" style="display: inline-block;">
-                                Open 4D Engine
-                            </a>
-                        </p>
-                    </div>
-                `;
-            }
-        }, 10000);
     </script>
 </body>
 </html>
