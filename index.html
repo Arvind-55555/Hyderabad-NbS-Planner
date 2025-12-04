@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyderabad NbS Planner - 4D Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .iframe-container {
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 200px);
+            min-height: 700px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            background: white;
+            margin: 2rem 0;
+        }
+        
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .info-box h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .info-box p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #667eea;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(102, 126, 234, 0.1);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .iframe-container {
+                height: calc(100vh - 150px);
+                min-height: 500px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌍 Hyderabad NbS 4D Visualization Engine</h1>
+        <p>Interactive 3D visualization with temporal transitions | Before/After NbS Implementation</p>
+    </div>
+    
+    <div class="container">
+        <div class="info-box">
+            <h3>🎬 4D Visualization Engine</h3>
+            <p>
+                This interactive 4D visualization shows Hyderabad's transformation from current urban state 
+                to a green, climate-resilient city through Nature-based Solutions (NbS).
+                <br><br>
+                <strong>Features:</strong> 5,000+ real buildings • 217 NbS intervention zones • Temporal slider (0% → 100%) • Interactive 3D controls
+            </p>
+        </div>
+        
+        <div class="iframe-container" id="iframe-container">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Loading 4D Visualization Engine...</p>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <a href="https://hyderabad-nbs-4d.streamlit.app/" target="_blank" class="btn btn-primary">
+                🚀 Open in New Tab
+            </a>
+            <a href="https://hyderabad-nbs.streamlit.app/" target="_blank" class="btn btn-secondary">
+                📊 Main Dashboard
+            </a>
+            <a href="https://github.com/Arvind-55555/Hyderabad-NbS-Planner" target="_blank" class="btn btn-secondary">
+                📁 View on GitHub
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        // Streamlit Cloud URL for 4D Engine
+        const STREAMLIT_URL = 'https://hyderabad-nbs-4d.streamlit.app/';
+        
+        // Create iframe
+        const container = document.getElementById('iframe-container');
+        const loading = document.getElementById('loading');
+        
+        // Check if Streamlit app is accessible
+        function loadStreamlitApp() {
+            const iframe = document.createElement('iframe');
+            iframe.src = STREAMLIT_URL;
+            iframe.id = 'streamlit-iframe';
+            iframe.allow = 'camera; microphone; geolocation';
+            
+            iframe.onload = function() {
+                loading.style.display = 'none';
+                iframe.style.display = 'block';
+            };
+            
+            iframe.onerror = function() {
+                loading.innerHTML = `
+                    <div class="error-message">
+                        <h3>⚠️ Streamlit App Not Available</h3>
+                        <p>The 4D visualization engine needs to be deployed to Streamlit Cloud first.</p>
+                        <p style="margin-top: 1rem;">
+                            <a href="https://share.streamlit.io" target="_blank" class="btn btn-primary" style="display: inline-block;">
+                                Deploy to Streamlit Cloud
+                            </a>
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            Main file: <code>tools/nbs_engine.py</code>
+                        </p>
+                    </div>
+                `;
+            };
+            
+            iframe.style.display = 'none';
+            container.appendChild(iframe);
+        }
+        
+        // Alternative: Redirect if iframe doesn't work
+        function redirectToStreamlit() {
+            // Check if we're in an iframe (to avoid redirect loops)
+            if (window.self === window.top) {
+                // Try to load in iframe first
+                loadStreamlitApp();
+            }
+        }
+        
+        // Load the app
+        redirectToStreamlit();
+        
+        // Fallback: If iframe fails after 10 seconds, show redirect button
+        setTimeout(function() {
+            if (loading.style.display !== 'none') {
+                loading.innerHTML = `
+                    <div class="error-message">
+                        <h3>Loading taking too long...</h3>
+                        <p>Click the button below to open the 4D visualization in a new window.</p>
+                        <p style="margin-top: 1rem;">
+                            <a href="${STREAMLIT_URL}" target="_blank" class="btn btn-primary" style="display: inline-block;">
+                                Open 4D Engine
+                            </a>
+                        </p>
+                    </div>
+                `;
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
+

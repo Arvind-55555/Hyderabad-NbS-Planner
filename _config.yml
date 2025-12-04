@@ -1,0 +1,31 @@
+# GitHub Pages Configuration
+# This file configures GitHub Pages to serve from root directory
+
+title: Hyderabad NbS Planner
+description: Interactive 4D visualization engine for Nature-based Solutions planning in Hyderabad, India
+theme: jekyll-theme-minimal
+
+# Use root directory as source
+source: /
+
+# Exclude unnecessary files from Jekyll processing
+exclude:
+  - README.md
+  - requirements.txt
+  - main.py
+  - web_app.py
+  - tools/
+  - src/
+  - data/
+  - outputs/
+  - cache/
+  - .gitignore
+  - .streamlit/
+  - docs/
+  - run_4d_visualization.sh
+  - view_geojson.html
+
+# Include only index.html
+include:
+  - index.html
+
