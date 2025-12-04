@@ -107,7 +107,6 @@ function App() {
         }
         
         if (!response || !response.ok) {
-        if (!response.ok) {
           console.warn('NbS data not found, continuing without it');
           return;
         }
@@ -362,4 +361,3 @@ function App() {
 }
 
 export default App;
-
